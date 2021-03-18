@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 const app = express();
+import routes from './routes';
 const PORT = process.env.PORT || 3001;
 import { json, text, urlencoded } from 'body-parser';
 
@@ -14,6 +15,8 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Methods", "*");
     next();
 });
+
+app.use(routes);
 
 app.listen(PORT, () => {
     console.log(`API Server now listening on PORT ${PORT}`);
