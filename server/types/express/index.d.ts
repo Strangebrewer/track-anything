@@ -1,12 +1,10 @@
 declare namespace Express {
   interface Request {
-    user: IRequestUser
+    user: {
+      _id: string;
+      email: string;
+      firstName?: string;
+      lastName?: string;
+    }
   }
-}
-
-interface IRequestUser {
-  _id: string;
-  email: string;
-  firstName?: string;
-  lastName?: string;
 }
