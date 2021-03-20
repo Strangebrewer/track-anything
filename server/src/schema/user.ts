@@ -4,7 +4,6 @@ import bcrypt from 'bcryptjs';
 const tempPw: string = bcrypt.hashSync('1234', bcrypt.genSaltSync(10));
 
 export interface IUser {
-  _id: string
   firstName?: string;
   lastName?: string;
   email: string;
@@ -12,7 +11,6 @@ export interface IUser {
 }
 
 export interface UserDoc extends mongoose.Document {
-  _id: string;
   firstName: string;
   lastName: string;
   email: string;
