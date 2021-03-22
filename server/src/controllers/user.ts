@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
 import UserSchema, { IUser } from '../schema/user';
 import User from '../models/user';
+import { IReturnUser } from '../models/user';
 
 const userModel = new User(UserSchema);
 
 export default {
   async getCurrentUser(req: Request, res: Response): Promise<Response> {
     try {
-      const user = await userModel.getCurrentUser(req.user._id);
+      const user: IReturnUser = await userModel.getCurrentUser(req.user._id);
       return res.status(200).json(user);
     } catch (err) {
       return res.status(400).send(err);
@@ -16,7 +17,7 @@ export default {
   
   async register(req: Request, res: Response): Promise<Response> {
     try {
-      const user = await userModel.register(req.body);
+      const user: IReturnUser = await userModel.register(req.body);
       return res.status(201).json(user);
     } catch (err) {
       return res.status(400).send(err);
@@ -25,7 +26,7 @@ export default {
 
   async login(req: Request, res: Response): Promise<Response> {
     try {
-      const user = await userModel.login(req.body);
+      const user: IReturnUser = await userModel.login(req.body);
       return res.status(200).json(user);
     } catch (err) {
       return res.status(400).send(err);

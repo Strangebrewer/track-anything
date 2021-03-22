@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import { sign } from '../utils/passport';
 import { UserModelInterface, IUser, UserDoc } from '../schema/user';
 
-interface IReturnUser {
+export interface IReturnUser {
   token: string;
   user: IUser
 }
@@ -11,7 +11,7 @@ export default class User {
   constructor(public Schema: UserModelInterface) { }
 
   async getCurrentUser(userId: string): Promise<IReturnUser> {
-    const response = await this.Schema.findById(userId);
+    const response: UserDoc | null = await this.Schema.findById(userId);
     if (!response) throw new Error('That user does not exist');
 
     const { _id, email, firstName, lastName } = response;
@@ -48,7 +48,7 @@ export default class User {
     if (email && !this.validateEmail(email))
       throw new Error('You must provide a valid email address.');
 
-    const emailTaken = await this.Schema.findOne({ email });
+    const emailTaken: UserDoc | null = await this.Schema.findOne({ email });
     if (email && emailTaken)
       throw new Error('That email has already been used.');
       
