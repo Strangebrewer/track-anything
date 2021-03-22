@@ -20,6 +20,29 @@ export default class User {
     return { token, user };
   }
 
+  async login(reqBody: IUser): Promise<IReturnUser> {
+    const { email, password } = reqBody;
+
+    if (!email || !password)
+      throw new Error('You have to supply an email and a password, stupid');
+
+    const response: UserDoc | null = await this.Schema.findOne({ email });
+
+    if (!response)
+      throw new Error('Something went wrong; please try again.');
+    
+    const passwordValid = this.checkPassword(password, response.password);
+
+    if (passwordValid)  {
+      const { _id, email } = response;
+      const token = sign({ id: _id });
+      const user = { _id, email };
+      return { token, user };
+    } else {
+      throw new Error('Something went wrong; please try again.');
+    }
+  }
+
   async register(reqBody: IUser): Promise<IReturnUser> {
     const { email, password } = reqBody;
     if (email && !this.validateEmail(email))

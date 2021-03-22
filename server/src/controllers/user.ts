@@ -25,7 +25,8 @@ export default {
 
   async login(req: Request, res: Response): Promise<Response> {
     try {
-      return res.send('login!');
+      const user = await userModel.login(req.body);
+      return res.status(200).json(user);
     } catch (err) {
       return res.status(400).send(err);
     }
