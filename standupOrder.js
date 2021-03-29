@@ -4,7 +4,8 @@ const devs = [
   'Jon',
   'TJ',
   'Hideky',
-  'Bryce'
+  'Bryce',
+  'Mike'
 ];
 
 // Mine, off the cuff
@@ -21,7 +22,7 @@ function shuffle(arr) {
   return newArr;
 }
 
-console.log('devs:::', shuffle(devs));
+// console.log('devs:::', shuffle(devs));
 
 // From Stack Overflow: "the d-facto unbiased shuffled algorithm is the Fisher-Yates (aka Knuth) Shuffle"
 function shuffleTwo(arr) {

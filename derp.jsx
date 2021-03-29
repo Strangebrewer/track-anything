@@ -31,7 +31,10 @@ export class PromotionalCodeForm extends BaseComponent {
 
   constructor(props) {
     super(props);
-    this.state = { confirmationOpen: false, alreadyRedeemedOpen: false };
+    this.state = {
+      confirmationOpen: false,
+      directUserExceptionOpen: false
+    };
   }
 
   handleCodeSubmit(values) {
@@ -44,14 +47,13 @@ export class PromotionalCodeForm extends BaseComponent {
       })
       .catch((error) => {
         const { body } = error.response;
-        console.log('body in handleCodeSubmit catch:::', body);
-        // if (body.message === 'You have already redeemed this promo code') {
-        //   this.setState({ alreadyRedeemedOpen: true });
-        // } else {
+        if (body.message === 'Direct users cannot redeem activation codes') {
+          this.setState({ directUserExceptionOpen: true });
+        } else {
           throw new SubmissionError({
             code: mapPromoErrorsFromBody(body)
           });
-        // }
+        }
       });
   }
 
@@ -60,8 +62,8 @@ export class PromotionalCodeForm extends BaseComponent {
     this.props.onSubmit(this.state.promotionalCodeResult);
   }
 
-  onCloseAlreadyRedeemed() {
-    this.setState({ alreadyRedeemedOpen: false });
+  onCloseDirectUserException() {
+    this.setState({ directUserExceptionOpen: false });
     window.location.href = '/dashboard';
   }
 
@@ -114,8 +116,8 @@ export class PromotionalCodeForm extends BaseComponent {
           </form>
 
           <Confirmation
-            open={ this.state.alreadyRedeemedOpen }
-            onClose={ this.onCloseAlreadyRedeemed }
+            open={ this.state.directUserExceptionOpen }
+            onClose={ this.onCloseDirectUserException }
             mediaType={ mediaType }
             message={ I18n.translate('Thank you! We added this code to your iFit account already. Your membership will renew on [date].', { date: format(new Date(this.props.renewalDate), 'MMM d, yyyy') }) }
           />
@@ -136,19 +138,11 @@ const mapDispatchToProps = dispatch => ({
   showModal: () => dispatch(actionCreators.showModal())
 });
 
-const matchStateToProps = state => {
-  console.log('state:::', state);
-  return {
+export default connect(
+  state => ({
     initialValues: { code: state.queryCode },
     renewalDate: state.user.expirationDate
-  }
-}
-
-export default connect(
-  // state => ({
-  //   initialValues: { code: state.queryCode }
-  // }),
-  matchStateToProps,
+  }),
   mapDispatchToProps
 )(reduxForm({
   form: 'promotionalCode',

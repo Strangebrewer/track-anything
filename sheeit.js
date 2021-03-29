@@ -1,60 +1,33 @@
-const theThingie = "I am a stupid string. I don't know anything.";
 
-switch (10) {
-  case 10:
-    console.log('5-3:::', 5-3);
-  case 18-8:
-    console.log('18-8:::', 18-8);
-  case 22-12:
-    console.log('22-12:::', 22-12);
+function promise(thing) {
+  return new Promise((resolve, reject) => {
+    if (typeof thing === 'string') resolve('yay');
+    else reject('boo');
+  });
 }
 
+(async function () {
+  // try {
+  //   const first = await promise('string');
+  //   console.log('first res:::', first);    
+  // } catch (err) {
+  //   console.log('first err:::', err);
+  // }
 
-console.time('regex-a');
-switch (true) {
-  case /I am a stupid string. I don't know anything./.test(theThingie):
-    console.log('regex-a');
-}
-console.timeEnd('regex-a');
+  promise()
+    .then(res => console.log('second res:::', res))
+    .catch(err => console.log('second err:::', err));
 
-console.time('no-regex');
-switch (theThingie) {
-  case "I am a stupid string. I don't know anything.":
-    console.log('no regex');
-}
-console.timeEnd('no-regex');
+  // try {
+  //   const third = await promise();
+  //   console.log('third res:::', third);
+  // } catch (err) {
+  //   console.log('third err:::', err);
+  // }
 
-console.time('regex');
-switch (true) {
-  case /I am a stupid string. I don't know anything./.test(theThingie):
-    console.log('regex');
-}
-console.timeEnd('regex');
-
-console.time('no-regex');
-switch (theThingie) {
-  case "I am a stupid string. I don't know anything.":
-    console.log('no regex');
-}
-console.timeEnd('no-regex');
-
-console.time('regex-b');
-switch (true) {
-  case /I am a stupid string. I don't know anything./.test(theThingie):
-    console.log('regex-b');
-}
-console.timeEnd('regex-b');
-
-console.time('no-regex');
-switch (theThingie) {
-  case "I am a stupid string. I don't know anything.":
-    console.log('no regex');
-}
-console.timeEnd('no-regex');
-
-console.time('regex-c');
-switch (true) {
-  case /I am a stupid string. I don't know anything./.test(theThingie):
-    console.log('regex-c');
-}
-console.timeEnd('regex-c');
+  const third = await promise()
+    .catch(err => {
+      console.log('third err:::', err);
+    });
+  if (third) console.log('third res:::', third);
+})();
