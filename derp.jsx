@@ -1,5 +1,3 @@
-// apps/new-web/views/pages/checkout/components/promotional-code/index.jsx
-
 import PropTypes from 'prop-types';
 import React from 'react';
 import { format } from 'date-fns';
@@ -39,11 +37,11 @@ export class PromotionalCodeForm extends BaseComponent {
 
   handleCodeSubmit(values) {
     return this.props.sendValidate(values.code)
-      .then(items => {
+      .then((items) => {
         this.setState({
           confirmationOpen: true,
           promotionalCodeResult: items
-        })
+        });
       })
       .catch((error) => {
         const { body } = error.response;
@@ -119,7 +117,10 @@ export class PromotionalCodeForm extends BaseComponent {
             open={ this.state.directUserExceptionOpen }
             onClose={ this.onCloseDirectUserException }
             mediaType={ mediaType }
-            message={ I18n.translate('Thank you! We added this code to your iFit account already. Your membership will renew on [date].', { date: format(new Date(this.props.renewalDate), 'MMM d, yyyy') }) }
+            message={ I18n.translate(
+              'Thank you! We added this code to your iFit account already. Your membership will renew on [date].',
+              { date: format(new Date(this.props.renewalDate), 'MMM d, yyyy') }
+            ) }
           />
 
           <Confirmation

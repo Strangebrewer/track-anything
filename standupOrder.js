@@ -1,11 +1,11 @@
 const devs = [
   'Alla',
-  'Keith',
-  'Jon',
-  'TJ',
-  'Hideky',
   'Bryce',
-  'Mike'
+  'Hideky',
+  'Jon',
+  'Keith',
+  'Mike',
+  'TJ',
 ];
 
 // Mine, off the cuff
@@ -27,6 +27,13 @@ function shuffle(arr) {
 // From Stack Overflow: "the d-facto unbiased shuffled algorithm is the Fisher-Yates (aka Knuth) Shuffle"
 function shuffleTwo(arr) {
   let copy = [...arr];
+  
+  const toRemove = process.argv[2] ? process.argv[2].split(',') : null;  
+  const toAdd = process.argv[3] ? process.argv[3].split(',') : null;
+
+  if (toRemove) copy = copy.filter(item => !toRemove.includes(item));
+  if (toAdd) toAdd.forEach(item => copy.push(item));
+  
   let current = copy.length;
   let temporary;
   let random;
