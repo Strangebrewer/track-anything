@@ -1,33 +1,12 @@
 
-function promise(thing) {
-  return new Promise((resolve, reject) => {
-    if (typeof thing === 'string') resolve('yay');
-    else reject('boo');
-  });
+const numbnuts = [1, 1.1, 1.101, 1.1011, 1.15, 1.125, 50, 200, 65, 5, 47, 152, 305, 9, 125, 15, 97, 84, 0.1, 0.5];
+const sorted = [];
+let totalTime = 0;
+
+for (let i = 0; i < numbnuts.length; i++) {
+  const element = numbnuts[i];
+  totalTime += element;
+  setTimeout(() => sorted.push(element), element)
 }
 
-(async function () {
-  // try {
-  //   const first = await promise('string');
-  //   console.log('first res:::', first);    
-  // } catch (err) {
-  //   console.log('first err:::', err);
-  // }
-
-  promise()
-    .then(res => console.log('second res:::', res))
-    .catch(err => console.log('second err:::', err));
-
-  // try {
-  //   const third = await promise();
-  //   console.log('third res:::', third);
-  // } catch (err) {
-  //   console.log('third err:::', err);
-  // }
-
-  const third = await promise()
-    .catch(err => {
-      console.log('third err:::', err);
-    });
-  if (third) console.log('third res:::', third);
-})();
+setTimeout(() => console.log('sorted:::', sorted), totalTime);

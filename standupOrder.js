@@ -50,4 +50,4 @@ function shuffleTwo(arr) {
   return copy;
 }
 
-console.log('devs2:::', shuffleTwo(devs));
+console.log('order:::', JSON.stringify(shuffleTwo(devs), null, " "));
