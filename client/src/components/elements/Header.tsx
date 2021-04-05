@@ -20,6 +20,8 @@ const Header: React.FC<Props> = props => {
     return (
         <Wrapper>
             <LinkButton onClick={() => goTo('/')}>HOME</LinkButton>
+            <LinkButton onClick={() => goTo('/tracker?id=606a98e920effb3a8c50f8e1')}>TRACKER + id</LinkButton>
+            <LinkButton onClick={() => goTo('/tracker')}>TRACKER</LinkButton>
             {user 
                 ? <AuthBtn onClick={props.logout}>LOGOUT</AuthBtn>
                 : <AuthBtn width="150" onClick={() => goTo('/login')}>LOGIN</AuthBtn>}

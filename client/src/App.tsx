@@ -8,6 +8,7 @@ import { GlobalStyle } from './styles/GlobalStyle';
 import Authentication from './utils/Authentication';
 import Authoritaw from './pages/Authoritaw';
 import Home from './pages/Home';
+import Tracker from './pages/Tracker';
 
 import API from './api';
 import { setAuthToken, resetAuthToken } from './utils/token';
@@ -90,6 +91,12 @@ const App = () => {
           <Route exact path="/">
             {routeProps => (
               <Home {...routeProps} {...authProps} />
+            )}
+          </Route>
+
+          <Route exact path="/tracker">
+            {routeProps => (
+              <Tracker {...routeProps} {...authProps} />
             )}
           </Route>
 
