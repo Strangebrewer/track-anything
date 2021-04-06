@@ -37,6 +37,7 @@ const Tracker: React.FC<Props> = props => {
         createdAt: true,
         lastEditedAt: true,
     });
+    const [fieldEditable, setFieldEditable] = useState<boolean>(false);
 
     function addField() {
 
@@ -52,9 +53,7 @@ const Tracker: React.FC<Props> = props => {
             if (history.location.search) {
                 // get data from store or db
                 const search = history.location.search.split('=')[1];
-                console.log('search:::', search);
                 const tracker = await API.tracker.getOne(search);
-                console.log('tracker:::', tracker)
                 setTrackerData({
                     title: tracker.data.title,
                     subtitle: tracker.data.subtitle,
@@ -81,7 +80,20 @@ const Tracker: React.FC<Props> = props => {
             </Header>
 
             <Body>
-                Yo, MTV Raps!
+                <button onClick={addField}>Add field</button>
+                {fieldEditable && (
+                    <form action="">
+                        <label htmlFor="field-type">Field Type:</label>
+                        <select name="type" id="field-type-selector">
+                            <option value="text">text - short</option>
+                            <option value="text">text - long</option>
+                            <option value="date">date</option>
+                            <option value="countdown">countdown</option>
+                            <option value="countup">countup</option>
+                            <option value="link">link</option>
+                        </select>
+                    </form>
+                )}
             </Body>
             
             <Footer>
@@ -89,7 +101,6 @@ const Tracker: React.FC<Props> = props => {
                 <p id="edited-date">last edited: {format(new Date(trackerData.createdAt), 'MMM dd, yyyy')}</p>
                 <button onClick={saveNewFucknTracker}>Save!</button>
             </Footer>
-            {trackerData.isNew && <button onClick={addField}>Add field</button>}
         </Wrapper>
     );
 }
